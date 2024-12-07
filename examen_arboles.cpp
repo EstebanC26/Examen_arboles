@@ -177,3 +177,54 @@ public:
         printTree(root, 0);
     }
 };
+
+void mostrarMenu() {
+    cout << "Seleccione una opcion:" << endl;
+    cout << "1. Insertar un nodo" << endl;
+    cout << "2. Eliminar un nodo" << endl;
+    cout << "3. Mostrar recorrido en orden" << endl;
+    cout << "4. Visualizar el arbol" << endl;
+    cout << "5. Salir" << endl;
+}
+
+int main() {
+    AVLTree<int> tree;
+    int opcion, valor;
+
+    do {
+        mostrarMenu();
+        cout << "Ingrese su opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Ingrese el valor a insertar: ";
+                cin >> valor;
+                tree.insert(valor);
+                cout << "Valor insertado." << endl;
+                break;
+            case 2:
+                cout << "Ingrese el valor a eliminar: ";
+                cin >> valor;
+                tree.remove(valor);
+                cout << "Valor eliminado." << endl;
+                break;
+            case 3:
+                cout << "Recorrido en orden del arbol AVL:" << endl;
+                tree.inOrder();
+                break;
+            case 4:
+                cout << "Visualizacion del arbol AVL:" << endl;
+                tree.printTree();
+                break;
+            case 5:
+                cout << "Saliendo..." << endl;
+                break;
+            default:
+                cout << "Opcion no valida. Intente de nuevo." << endl;
+                break;
+        }
+    } while (opcion != 5);
+
+    return 0;
+}
