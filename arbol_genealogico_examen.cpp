@@ -126,6 +126,39 @@ public:
         }
     }
 
+    void agregarHermanoCSV(const string& nombreArchivo) {
+        ofstream archivo(nombreArchivo, ios::app);
+        if (!archivo.is_open()) {
+            cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << endl;
+            exit(EXIT_FAILURE);
+        }
+
+        string name, last_name, gender, age, is_dead, father_name, father_last_name, mother_name, mother_last_name;
+
+        cout << "Ingrese el nombre del hermano: ";
+        cin >> name;
+        cout << "Ingrese el apellido del hermano: ";
+        cin >> last_name;
+        cout << "Ingrese el genero del hermano (M/F): ";
+        cin >> gender;
+        cout << "Ingrese la edad del hermano: ";
+        cin >> age;
+        cout << "Esta muerto? (1: si, 0: no): ";
+        cin >> is_dead;
+        cout << "Ingrese el nombre del padre: ";
+        cin >> father_name;
+        cout << "Ingrese el apellido del padre: ";
+        cin >> father_last_name;
+        cout << "Ingrese el nombre de la madre: ";
+        cin >> mother_name;
+        cout << "Ingrese el apellido de la madre: ";
+        cin >> mother_last_name;
+
+        archivo << name << "," << last_name << "," << gender << "," << age << "," << is_dead << "," << father_name << "," << father_last_name << "," << mother_name << "," << mother_last_name << endl;
+
+        archivo.close();
+    }
+
     void mostrarArbol(Nodo* nodo, int nivel = 0) const {
         if (nodo == nullptr) return;
 
@@ -137,9 +170,6 @@ public:
         for (int i = 0; i < nodo->num_siblings; ++i) {
             mostrarArbol(nodo->siblings[i], nivel + 1);
         }
-
-        mostrarArbol(nodo->father, nivel + 1);
-        mostrarArbol(nodo->mother, nivel + 1);
     }
 
     void mostrarArbol() const {
@@ -149,13 +179,14 @@ public:
 
 void mostrarMenu() {
     cout << "Seleccione una opcion:" << endl;
-    cout << "1. Mostrar arbol genealogico" << endl;
-    cout << "2. Salir" << endl;
+    cout << "1. Leer archivo CSV y crear arbol genealogico" << endl;
+    cout << "2. Agregar hermano al CSV" << endl;
+    cout << "3. Mostrar arbol genealogico" << endl;
+    cout << "4. Salir" << endl;
 }
 
 int main() {
     ArbolGenealogico arbol;
-    arbol.leerCSV("arbol_genealogico.csv");
 
     int opcion;
     do {
@@ -165,16 +196,23 @@ int main() {
 
         switch (opcion) {
             case 1:
-                arbol.mostrarArbol();
+                arbol.leerCSV("arbol_genealogico.csv");
+                cout << "Arbol genealogico creado a partir del archivo CSV." << endl;
                 break;
             case 2:
+                arbol.agregarHermanoCSV("arbol_genealogico.csv");
+                break;
+            case 3:
+                arbol.mostrarArbol();
+                break;
+            case 4:
                 cout << "Saliendo..." << endl;
                 break;
             default:
                 cout << "Opcion no valida. Intente de nuevo." << endl;
                 break;
         }
-    } while (opcion != 2);
+    } while (opcion != 4);
 
     return 0;
 }
