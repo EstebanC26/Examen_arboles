@@ -104,9 +104,9 @@ public:
             Nodo* nodo = obtenerNodo(name, last_name);
             nodo->name = name;
             nodo->last_name = last_name;
-            nodo->gender = gender[0];
-            nodo->age = stoi(age);
-            nodo->is_dead = stoi(is_dead);
+            nodo->gender = gender.empty() ? ' ' : gender[0];
+            nodo->age = age.empty() ? 0 : stoi(age);
+            nodo->is_dead = is_dead.empty() ? false : stoi(is_dead);
 
             if (!father_name.empty() && !father_last_name.empty()) {
                 Nodo* padre = obtenerNodo(father_name, father_last_name);
